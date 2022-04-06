@@ -396,11 +396,11 @@ def main():
 
     # distributed training
     ngpus = torch.cuda.device_count()
-    if ngpus > 1:
+    if ngpus >= 1:
         if args.local_rank == 0:
             print(f"Using distributed training on {ngpus} gpus.")
         args.batch_size = args.batch_size // ngpus
-        torch.distributed.init_process_group(backend="nccl", init_method="env://")
+        torch.distributed.init_process_group(backend="gloo", init_method="env://", rank=0, world_size=1)
         model = DDP(model, device_ids=[args.local_rank], output_device=args.local_rank)
 
     # sampling
