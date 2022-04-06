@@ -35,6 +35,12 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node
   --arch UNet --dataset cifar10 --class-cond --sampling-only --sampling-steps 250 \
   --num-sampled-images 50000 --pretrained-ckpt path_to_pretrained_model
 ```
+**For Training on Google Colab**
+```
+!torchrun 'minimal-diffusion/main.py' \
+  --arch UNet --dataset cifar10 --class-cond --sampling-only --sampling-steps 250 \
+  --num-sampled-images 50000 --pretrained-ckpt path_to_pretrained_model
+ ```
 
 We provide the exact script used for sampling in `./scripts/sample.sh`. 
 
