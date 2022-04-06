@@ -396,7 +396,7 @@ def main():
 
     # distributed training
     ngpus = torch.cuda.device_count()
-    if ngpus > 1:
+    if ngpus >= 1:
         if args.local_rank == 0:
             print(f"Using distributed training on {ngpus} gpus.")
         args.batch_size = args.batch_size // ngpus
