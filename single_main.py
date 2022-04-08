@@ -254,7 +254,7 @@ def sample_N_images(
     Returns: Numpy array with N images and corresponding labels.
     """
     samples, labels, num_samples = [], [], 0
-    num_processes, group = dist.get_world_size(), dist.group.WORLD
+    num_processes, group = 1,1
     with tqdm(total=math.ceil(N / (args.batch_size * num_processes))) as pbar:
         while num_samples < N:
             if xT is None:
@@ -392,11 +392,11 @@ def main():
 
     # distributed training
     ngpus = torch.cuda.device_count()
-    if ngpus >= 1:
+    if ngpus > 1:
         if args.local_rank == 0:
             print(f"Using distributed training on {ngpus} gpus.")
         args.batch_size = args.batch_size // ngpus
-        torch.distributed.init_process_group(backend="gloo", init_method="env://", rank=0, world_size=1)
+        torch.distributed.init_process_group(backend="nccl", init_method="env://", rank=0, world_size=1)
         model = DDP(model, device_ids=[args.local_rank], output_device=args.local_rank)
 
     # sampling
