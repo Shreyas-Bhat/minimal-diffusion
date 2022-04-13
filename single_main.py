@@ -278,7 +278,7 @@ def sample_N_images(
                 dist.all_gather(labels_list, y, group)
                 labels.append(torch.cat(labels_list).detach().cpu().numpy())
 
-            dist.all_gather(samples_list, gen_images, group)
+            #dist.all_gather(samples_list, gen_images, group)
             samples.append(torch.cat(samples_list).detach().cpu().numpy())
             num_samples += len(xT) * num_processes
             pbar.update(1)
