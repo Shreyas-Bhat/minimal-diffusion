@@ -275,7 +275,7 @@ def sample_N_images(
             samples_list = [torch.zeros_like(gen_images) for _ in range(num_processes)]
             if args.class_cond:
                 labels_list = [torch.zeros_like(y) for _ in range(num_processes)]
-                dist.all_gather(labels_list, y, group)
+                #dist.all_gather(labels_list, y, group)
                 labels.append(torch.cat(labels_list).detach().cpu().numpy())
 
             #dist.all_gather(samples_list, gen_images, group)
