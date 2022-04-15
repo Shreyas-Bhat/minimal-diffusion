@@ -1,3 +1,4 @@
+#Edit for single GPU use
 import os
 import cv2
 import copy
