@@ -257,7 +257,7 @@ def sample_N_images(
     """
     samples, labels, num_samples = [], [], 0
     # num_processes, group = dist.get_world_size(), dist.group.WORLD
-    with tqdm(total=math.ceil(N / (args.batch_size * num_processes))) as pbar:
+    with tqdm(total=math.ceil(N / (args.batch_size * 1))) as pbar:
         while num_samples < N:
             if xT is None:
                 xT = (
