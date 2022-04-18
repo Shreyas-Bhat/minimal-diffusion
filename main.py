@@ -242,7 +242,6 @@ def sample_N_images(
 ):
     """use this function to sample any number of images from a given
         diffusion model and diffusion process.
-
     Args:
         N : Number of images
         model : Diffusion model
@@ -254,11 +253,10 @@ def sample_N_images(
         image_size : Image size (assuming square images).
         num_classes : Number of classes in the dataset (needed for class-conditioned models)
         args : All args from the argparser.
-
     Returns: Numpy array with N images and corresponding labels.
     """
     samples, labels, num_samples = [], [], 0
-    num_processes, group = dist.get_world_size(), dist.group.WORLD
+    # num_processes, group = dist.get_world_size(), dist.group.WORLD
     with tqdm(total=math.ceil(N / (args.batch_size * num_processes))) as pbar:
         while num_samples < N:
             if xT is None:
@@ -276,20 +274,20 @@ def sample_N_images(
             gen_images = diffusion.sample_from_reverse_process(
                 model, xT, sampling_steps, {"y": y}, args.ddim
             )
-            samples_list = [torch.zeros_like(gen_images) for _ in range(num_processes)]
+            # samples_list = [torch.zeros_like(gen_images) for _ in range(num_processes)]
             if args.class_cond:
-                labels_list = [torch.zeros_like(y) for _ in range(num_processes)]
-                dist.all_gather(labels_list, y, group)
-                labels.append(torch.cat(labels_list).detach().cpu().numpy())
+                # labels_list = [torch.zeros_like(y) for _ in range(num_processes)]
+                # dist.all_gather(labels_list, y, group)
+                labels.append(y.detach().cpu().numpy())
 
-            dist.all_gather(samples_list, gen_images, group)
-            samples.append(torch.cat(samples_list).detach().cpu().numpy())
+            # dist.all_gather(samples_list, gen_images, group)
+            
+            samples.append(gen_images.detach().cpu().numpy())
             num_samples += len(xT) * num_processes
             pbar.update(1)
     samples = np.concatenate(samples).transpose(0, 2, 3, 1)[:N]
     samples = (127.5 * (samples + 1)).astype(np.uint8)
     return (samples, np.concatenate(labels) if args.class_cond else None)
-
 
 def main():
     parser = argparse.ArgumentParser("Minimal implementation of diffusion models")
