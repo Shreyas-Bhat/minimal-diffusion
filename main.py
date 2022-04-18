@@ -256,7 +256,7 @@ def sample_N_images(
     Returns: Numpy array with N images and corresponding labels.
     """
     samples, labels, num_samples = [], [], 0
-    # num_processes, group = dist.get_world_size(), dist.group.WORLD
+    num_processes, group = dist.get_world_size(), dist.group.WORLD
     with tqdm(total=math.ceil(N / (args.batch_size * 1))) as pbar:
         while num_samples < N:
             if xT is None:
