@@ -417,7 +417,7 @@ def main():
         )
 #         np.savez(
 #             os.path.join(
-#                 args.save_dir,
+#                 'drive/MyDrive/minimal_diffusion/diffusion_models/',
 #                 f"{args.arch}_{args.dataset}-{args.sampling_steps}-sampling_steps-{len(sampled_images)}_images-class_condn_{args.class_cond}.npz",
 #             ),
 #             sampled_images,
@@ -466,7 +466,7 @@ def main():
             if args.local_rank == 0:
                 cv2.imwrite(
                     os.path.join(
-                        args.save_dir,
+                        'drive/MyDrive/minimal_diffusion/diffusion_models/',
                         f"{args.arch}_{args.dataset}-{args.diffusion_steps}_steps-{args.sampling_steps}-sampling_steps-class_condn_{args.class_cond}.png",
                     ),
                     np.concatenate(sampled_images, axis=1)[:, :, ::-1],
@@ -475,14 +475,14 @@ def main():
             torch.save(
                 model.state_dict(),
                 os.path.join(
-                    args.save_dir,
+                    'drive/MyDrive/minimal_diffusion/diffusion_models/',
                     f"{args.arch}_{args.dataset}-epoch_{args.epochs}-timesteps_{args.diffusion_steps}-class_condn_{args.class_cond}.pt",
                 ),
             )
             torch.save(
                 args.ema_dict,
                 os.path.join(
-                    args.save_dir,
+                    'drive/MyDrive/minimal_diffusion/diffusion_models/',
                     f"{args.arch}_{args.dataset}-epoch_{args.epochs}-timesteps_{args.diffusion_steps}-class_condn_{args.class_cond}_ema_{args.ema_w}.pt",
                 ),
             )
