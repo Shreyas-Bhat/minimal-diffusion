@@ -415,14 +415,14 @@ def main():
             metadata.num_classes,
             args,
         )
-#         np.savez(
-#             os.path.join(
-#                 'drive/MyDrive/minimal_diffusion/diffusion_models/',
-#                 f"{args.arch}_{args.dataset}-{args.sampling_steps}-sampling_steps-{len(sampled_images)}_images-class_condn_{args.class_cond}.npz",
-#             ),
-#             sampled_images,
-#             labels,
-#         )
+        np.savez(
+            os.path.join(
+                'drive/MyDrive/minimal_diffusion/diffusion_models/',
+                f"{args.arch}_{args.dataset}-{args.sampling_steps}-sampling_steps-{len(sampled_images)}_images-class_condn_{args.class_cond}.npz",
+            ),
+            sampled_images,
+            labels,
+        )
         return
 
     # Load dataset
