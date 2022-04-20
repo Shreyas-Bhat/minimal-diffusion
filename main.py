@@ -16,8 +16,8 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 from data import get_metadata, get_dataset, fix_legacy_dict
 import unets
-from google.colab import drive
-drive.mount('/content/drive')
+# from google.colab import drive
+# drive.mount('/content/drive')
 
 unsqueeze3x = lambda x: x[..., None, None, None]
 
